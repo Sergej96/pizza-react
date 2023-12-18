@@ -1,7 +1,9 @@
+import React from 'react';
 import Categories from './components/categories/Categorise';
 import Sort from './components/categories/Sort';
 import PizzaBlock from './components/categories/pizza-block/PizzaBlock';
 import Header from './components/header/Header';
+import pizzasData from './assets/pizzas.json';
 import './scss/app.scss';
 
 function App() {
@@ -16,7 +18,9 @@ function App() {
                     </div>
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
-                        <PizzaBlock />
+                        {pizzasData.map((pizza) => (
+                            <PizzaBlock key={pizza.id} {...pizza} />
+                        ))}
                     </div>
                 </div>
             </div>
