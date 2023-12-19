@@ -1,0 +1,24 @@
+.root {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 12px 12px 12px 20px;
+    max-width: 300px;
+    width: 100%;
+
+    &:has(.inputSearch:focus) {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .inputSearch {
+        flex-grow: 1;
+        border: none;
+    }
+
+    .icon {
+        margin-left: 6px;
+        cursor: pointer;
+    }
+}

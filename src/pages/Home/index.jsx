@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Skeleton from '../../components/categories/Pizza-Block/skeleton';
 import PizzaBlock from '../../components/categories/Pizza-Block';
 import Categories from '../../components/categories';
 import Sort from '../../components/categories/Sort';
 import Pagination from '../../components/categories/Pagination';
+import { SearchContext } from '../../contexts/search-context';
 
 const Home = () => {
     const [items, setItems] = useState([]);
@@ -20,18 +21,20 @@ const Home = () => {
     const limit = 4;
     const [page, setPage] = useState(1);
 
+    const { searchValue } = useContext(SearchContext);
+
     useEffect(() => {
         setIsLoading(true);
         const catogiry = categoryId ? `category=${categoryId}` : '';
         fetch(
-            `https://658032146ae0629a3f5495b5.mockapi.io/items?${catogiry}&sortBy=${sort.type}&order=${sortOrder}&limit=${limit}&page=${page}`,
+            `https://658032146ae0629a3f5495b5.mockapi.io/items?${catogiry}&sortBy=${sort.type}&order=${sortOrder}&limit=${limit}&page=${page}&title=${searchValue}`,
         )
             .then((res) => res.json())
             .then((json) => {
                 setItems(json);
                 setIsLoading(false);
             });
-    }, [categoryId, sort, sortOrder, page]);
+    }, [categoryId, sort, sortOrder, page, searchValue]);
 
     return (
         <>
