@@ -4,6 +4,7 @@ import Skeleton from '../../components/categories/Pizza-Block/skeleton';
 import PizzaBlock from '../../components/categories/Pizza-Block';
 import Categories from '../../components/categories';
 import Sort from '../../components/categories/Sort';
+import Pagination from '../../components/categories/Pagination';
 
 const Home = () => {
     const [items, setItems] = useState([]);
@@ -15,18 +16,22 @@ const Home = () => {
     });
     const [sortOrder, setSortOrder] = useState('asc');
 
+    const totalCount = 10;
+    const limit = 4;
+    const [page, setPage] = useState(1);
+
     useEffect(() => {
         setIsLoading(true);
         const catogiry = categoryId ? `category=${categoryId}` : '';
         fetch(
-            `https://658032146ae0629a3f5495b5.mockapi.io/items?${catogiry}&sortBy=${sort.type}&order=${sortOrder}`,
+            `https://658032146ae0629a3f5495b5.mockapi.io/items?${catogiry}&sortBy=${sort.type}&order=${sortOrder}&limit=${limit}&page=${page}`,
         )
             .then((res) => res.json())
             .then((json) => {
                 setItems(json);
                 setIsLoading(false);
             });
-    }, [categoryId, sort, sortOrder]);
+    }, [categoryId, sort, sortOrder, page]);
 
     return (
         <>
@@ -42,7 +47,7 @@ const Home = () => {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {isLoading
-                    ? [...new Array(6)].map((_, index) => (
+                    ? [...new Array(limit)].map((_, index) => (
                           <Skeleton key={index} />
                       ))
                     : items.map((pizza) => (
@@ -50,6 +55,12 @@ const Home = () => {
                       ))}
                 {}
             </div>
+            <Pagination
+                countTotal={totalCount}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+            />
         </>
     );
 };
