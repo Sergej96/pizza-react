@@ -15,6 +15,11 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 576px) {
+    width: calc(100vw - 30px);
+    margin-block: 15px;
+  }
 }
 
 .content {
@@ -25,15 +30,25 @@ body {
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    column-gap: 35px;
+
+    &--cart {
+      display: block;
+    }
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media(max-width: 1024px) {
+      flex-direction: column;
+      align-items: start;
+      row-gap: 15px;
+    }
   }
 }
 
