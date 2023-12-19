@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import Skeleton from '../components/categories/pizza-block/skeleton';
-import PizzaBlock from '../components/categories/pizza-block/PizzaBlock';
-import Categories from '../components/categories/Categorise';
-import Sort from '../components/categories/Sort';
+import Skeleton from '../../components/categories/Pizza-Block/skeleton';
+import PizzaBlock from '../../components/categories/Pizza-Block';
+import Categories from '../../components/categories';
+import Sort from '../../components/categories/Sort';
 
 const Home = () => {
     const [items, setItems] = useState([]);
