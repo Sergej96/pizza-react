@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Categories = () => {
-    const [activeCategory, setActiveCategory] = useState(0);
+const Categories = ({ id, onChangeCategory }) => {
     const categories = [
         'Все',
         'Мясные',
@@ -12,7 +12,7 @@ const Categories = () => {
     ];
 
     const changeActiveCategory = (index) => {
-        setActiveCategory(index);
+        onChangeCategory(index);
     };
     return (
         <div className="categories">
@@ -20,7 +20,7 @@ const Categories = () => {
                 {categories.map((name, index) => (
                     <li
                         key={index}
-                        className={activeCategory === index ? 'active' : ''}
+                        className={id === index ? 'active' : ''}
                         onClick={() => changeActiveCategory(index)}
                     >
                         {name}
@@ -29,6 +29,11 @@ const Categories = () => {
             </ul>
         </div>
     );
+};
+
+Categories.propTypes = {
+    id: PropTypes.number,
+    onChangeCategory: PropTypes.func,
 };
 
 export default Categories;

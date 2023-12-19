@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Sort = () => {
+const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(0);
-    const list = ['популярности', 'цене', 'алфавиту'];
+    const list = [
+        { name: 'популярности', type: 'rating' },
+        { name: 'цене', type: 'price' },
+        { name: 'алфавиту', type: 'title' },
+    ];
 
-    const onSelectSort = (i) => {
-        setSelected(i);
+    const onSelectSort = (objSort) => {
+        onChangeSortBy(objSort);
         setIsOpen(false);
     };
 
     return (
         <div className="sort">
-            <div className="sort__label">
+            <button
+                className={
+                    'sort__label ' +
+                    (orderSort === 'asc'
+                        ? 'sort__label--asc'
+                        : 'sort__label--desc')
+                }
+            >
                 <svg
-                    width="10"
-                    height="6"
+                    onClick={() =>
+                        setOrderSort(orderSort === 'asc' ? 'desc' : 'asc')
+                    }
+                    width="30"
+                    height="26"
                     viewBox="0 0 10 6"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -27,19 +41,21 @@ const Sort = () => {
                 </svg>
                 <b>Сортировка по:</b>
                 <span onClick={() => setIsOpen((prev) => !prev)}>
-                    {list[selected]}
+                    {sortBy.name}
                 </span>
-            </div>
+            </button>
             {isOpen && (
                 <div className="sort__popup">
                     <ul>
                         {list.map((item, index) => (
                             <li
                                 key={index}
-                                className={index === selected ? 'active' : ''}
-                                onClick={() => onSelectSort(index)}
+                                className={
+                                    item.type === sortBy.type ? 'active' : ''
+                                }
+                                onClick={() => onSelectSort(item)}
                             >
-                                {item}
+                                {item.name}
                             </li>
                         ))}
                     </ul>
@@ -47,6 +63,13 @@ const Sort = () => {
             )}
         </div>
     );
+};
+
+Sort.propTypes = {
+    sortBy: PropTypes.object,
+    onChangeSortBy: PropTypes.func,
+    orderSort: PropTypes.string,
+    setOrderSort: PropTypes.func,
 };
 
 export default Sort;
