@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { setCategoryId } from '../../features/filter/filterSlice';
+import { useDispatch } from 'react-redux';
 
-const Categories = ({ id, onChangeCategory }) => {
+const Categories = ({ id }) => {
+    const dispatch = useDispatch();
     const categories = [
         'Все',
         'Мясные',
@@ -10,9 +13,8 @@ const Categories = ({ id, onChangeCategory }) => {
         'Острые',
         'Закрытые',
     ];
-
-    const changeActiveCategory = (index) => {
-        onChangeCategory(index);
+    const changeCategory = (index) => {
+        dispatch(setCategoryId(index));
     };
     return (
         <div className="categories">
@@ -21,7 +23,7 @@ const Categories = ({ id, onChangeCategory }) => {
                     <li
                         key={index}
                         className={id === index ? 'active' : ''}
-                        onClick={() => changeActiveCategory(index)}
+                        onClick={() => changeCategory(index)}
                     >
                         {name}
                     </li>
@@ -33,7 +35,6 @@ const Categories = ({ id, onChangeCategory }) => {
 
 Categories.propTypes = {
     id: PropTypes.number,
-    onChangeCategory: PropTypes.func,
 };
 
 export default Categories;

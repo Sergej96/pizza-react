@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
-const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { setSort } from '../../../features/filter/filterSlice';
+
+const Sort = () => {
+    const dispatch = useDispatch();
+    const sort = useSelector((state) => state.filter.sort);
     const [isOpen, setIsOpen] = useState(false);
     const list = [
         { name: 'популярности', type: 'rating' },
@@ -10,7 +14,7 @@ const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
     ];
 
     const onSelectSort = (objSort) => {
-        onChangeSortBy(objSort);
+        dispatch(setSort(objSort));
         setIsOpen(false);
     };
 
@@ -19,14 +23,18 @@ const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
             <button
                 className={
                     'sort__label ' +
-                    (orderSort === 'asc'
+                    (sort.order === 'asc'
                         ? 'sort__label--asc'
                         : 'sort__label--desc')
                 }
             >
                 <svg
                     onClick={() =>
-                        setOrderSort(orderSort === 'asc' ? 'desc' : 'asc')
+                        dispatch(
+                            setSort({
+                                order: sort.order === 'asc' ? 'desc' : 'asc',
+                            }),
+                        )
                     }
                     width="30"
                     height="26"
@@ -41,7 +49,7 @@ const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
                 </svg>
                 <b>Сортировка по:</b>
                 <span onClick={() => setIsOpen((prev) => !prev)}>
-                    {sortBy.name}
+                    {sort.name}
                 </span>
             </button>
             {isOpen && (
@@ -51,7 +59,7 @@ const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
                             <li
                                 key={index}
                                 className={
-                                    item.type === sortBy.type ? 'active' : ''
+                                    item.type === sort.type ? 'active' : ''
                                 }
                                 onClick={() => onSelectSort(item)}
                             >
@@ -63,13 +71,6 @@ const Sort = ({ sortBy, onChangeSortBy, orderSort, setOrderSort }) => {
             )}
         </div>
     );
-};
-
-Sort.propTypes = {
-    sortBy: PropTypes.object,
-    onChangeSortBy: PropTypes.func,
-    orderSort: PropTypes.string,
-    setOrderSort: PropTypes.func,
 };
 
 export default Sort;
