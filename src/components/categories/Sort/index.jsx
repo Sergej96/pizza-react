@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../../../features/filter/filterSlice';
@@ -12,14 +12,30 @@ export const sortList = [
 const Sort = () => {
     const dispatch = useDispatch();
     const sort = useSelector((state) => state.filter.sort);
+    const sortRef = useRef();
     const [isOpen, setIsOpen] = useState(false);
+
     const onSelectSort = (objSort) => {
         dispatch(setSort(objSort));
         setIsOpen(false);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!sortRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+
+        document.body.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.body.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="sort">
+        <div className="sort" ref={sortRef}>
             <button
                 className={
                     'sort__label ' +
