@@ -1,9 +1,12 @@
 import React from 'react';
 import styles from './Pagination.module.scss';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentPage } from '../../../features/pizza/pizzaSlice';
 
-const Pagination = ({ countTotal, limit, page, setPage }) => {
-    const countPage = Math.ceil(countTotal / limit);
+const Pagination = () => {
+    const { page, totalCount, limitShow } = useSelector((state) => state.pizza);
+    const dispatch = useDispatch();
+    const countPage = Math.ceil(totalCount / limitShow);
     const arPage = [];
     for (let i = 1; i <= countPage; i++) {
         arPage.push(i);
@@ -16,7 +19,7 @@ const Pagination = ({ countTotal, limit, page, setPage }) => {
                     <li
                         key={i}
                         className={page === i ? styles.active : ''}
-                        onClick={() => setPage(i)}
+                        onClick={() => dispatch(setCurrentPage(i))}
                     >
                         {i}
                     </li>
@@ -24,13 +27,6 @@ const Pagination = ({ countTotal, limit, page, setPage }) => {
             </ul>
         </div>
     );
-};
-
-Pagination.propTypes = {
-    countTotal: PropTypes.number,
-    limit: PropTypes.number,
-    page: PropTypes.number,
-    setPage: PropTypes.func,
 };
 
 export default Pagination;
