@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../../../features/cart/cartSlice';
 
-const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
-    const [count, setCount] = useState(0);
+const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
+    const typeNames = ['тонкое', 'традиционное'];
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
-    const addCount = () => {
-        setCount(count + 1);
+    const dispatch = useDispatch();
+
+    const cartItem = useSelector((store) =>
+        store.cart.products.find(
+            (item) =>
+                item.id === id &&
+                item.size === sizes[activeSize] &&
+                item.type === typeNames[activeType],
+        ),
+    );
+    const addedCount = cartItem ? cartItem.count : 0;
+
+    const onAddProduct = () => {
+        const obj = {
+            id,
+            title,
+            price,
+            imageUrl,
+            size: sizes[activeSize],
+            type: typeNames[activeType],
+        };
+
+        dispatch(addProduct(obj));
     };
-    const typeNames = ['тонкое', 'традиционное'];
 
     return (
         <div className="pizza-block">
@@ -46,7 +68,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
                 <div className="pizza-block__price">от {price} ₽</div>
                 <button
                     className="button button--outline button--add"
-                    onClick={addCount}
+                    onClick={onAddProduct}
                 >
                     <svg
                         width="12"
@@ -61,7 +83,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>{count}</i>
+                    {addedCount > 0 && <i>{addedCount}</i>}
                 </button>
             </div>
         </div>
@@ -69,6 +91,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
 };
 
 PizzaBlock.propTypes = {
+    id: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
     imageUrl: PropTypes.string,
