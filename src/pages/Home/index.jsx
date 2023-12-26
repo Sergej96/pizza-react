@@ -11,31 +11,31 @@ import { SearchContext } from '../../contexts/search-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { setCategoryId, setSort } from '../../features/filter/filterSlice';
-import { setCurrentPage } from '../../features/pizza/pizzaSlice';
+import { fetchPizzas, setCurrentPage } from '../../features/pizza/pizzaSlice';
 
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const { categoryId, sort } = useSelector((state) => state.filter);
-    const { page, limitShow } = useSelector((state) => state.pizza);
+    const { page, limitShow, items, status } = useSelector(
+        (state) => state.pizza,
+    );
 
     const { searchValue } = useContext(SearchContext);
-    const fetchPizzas = () => {
-        setIsLoading(true);
+    const getPizzas = async () => {
+        const category = categoryId ? `category=${categoryId}` : '';
 
-        const catogiry = categoryId ? `category=${categoryId}` : '';
-        axios
-            .get(
-                `https://658032146ae0629a3f5495b5.mockapi.io/items?${catogiry}&sortBy=${sort.type}&order=${sort.order}&limit=${limitShow}&page=${page}&title=${searchValue}`,
-            )
-            .then((response) => {
-                setItems(response.data);
-                setIsLoading(false);
-            });
+        dispatch(
+            fetchPizzas({
+                category,
+                sort,
+                limitShow,
+                page,
+                searchValue,
+            }),
+        );
     };
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const Home = () => {
         window.scrollTo(0, 0);
 
         if (!isSearch.current) {
-            fetchPizzas();
+            getPizzas();
         }
 
         isSearch.current = false;
@@ -86,17 +86,28 @@ const Home = () => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {isLoading
-                    ? [...new Array(limitShow)].map((_, index) => (
-                          <Skeleton key={index} />
-                      ))
-                    : items.map((pizza) => (
-                          <PizzaBlock key={pizza.id} {...pizza} />
-                      ))}
-                {}
-            </div>
-            <Pagination />
+            {status === 'error' ? (
+                <div className="content__empty">
+                    <h2>Произошла ошибка 😕</h2>
+                    <p>
+                        Не удалось получить пиццы. Попробуйте получить пиццы
+                        позже
+                    </p>
+                </div>
+            ) : (
+                <div className="content__items">
+                    {status === 'loading'
+                        ? [...new Array(limitShow)].map((_, index) => (
+                              <Skeleton key={index} />
+                          ))
+                        : items.map((pizza) => (
+                              <PizzaBlock key={pizza.id} {...pizza} />
+                          ))}
+                    {}
+                </div>
+            )}
+
+            {status === 'success' && <Pagination />}
         </>
     );
 };

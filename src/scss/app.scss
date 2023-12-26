@@ -29,6 +29,31 @@ body {
         margin: 35px 0;
     }
 
+    &__empty {
+        margin: 80px auto;
+        width: 600px;
+        text-align: center;
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+
+            i {
+                position: relative;
+                font-style: normal;
+                top: 2px;
+            }
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 145.4%;
+            letter-spacing: 0.01em;
+            color: #777777;
+        }
+    }
+
     &__items {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -298,8 +323,10 @@ body {
             font-weight: 700;
             margin-bottom: 10px;
 
-            i{
+            i {
+                position: relative;
                 font-style: normal;
+                top: 2px;
             }
         }
 
@@ -308,11 +335,6 @@ body {
             line-height: 145.4%;
             letter-spacing: 0.01em;
             color: #777777;
-        }
-
-        icon {
-            position: relative;
-            top: 2px;
         }
 
         img {
