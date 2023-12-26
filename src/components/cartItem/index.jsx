@@ -111,7 +111,7 @@ const CartItem = ({ id, title, imageUrl, size, type, price, count }) => {
 };
 
 CartItem.propTypes = {
-    id: propTypes.number,
+    id: propTypes.string,
     title: propTypes.string,
     imageUrl: propTypes.string,
     size: propTypes.number,

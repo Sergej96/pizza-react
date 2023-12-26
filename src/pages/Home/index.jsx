@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { setCategoryId, setSort } from '../../features/filter/filterSlice';
 import { fetchPizzas, setCurrentPage } from '../../features/pizza/pizzaSlice';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -100,9 +101,10 @@ const Home = () => {
                               <Skeleton key={index} />
                           ))
                         : items.map((pizza) => (
-                              <PizzaBlock key={pizza.id} {...pizza} />
+                              <Link to={`pizzas/${pizza.id}`} key={pizza.id}>
+                                  <PizzaBlock {...pizza} />
+                              </Link>
                           ))}
-                    {}
                 </div>
             )}
 

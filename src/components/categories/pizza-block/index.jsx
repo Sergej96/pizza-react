@@ -91,7 +91,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
 };
 
 PizzaBlock.propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.string,
     title: PropTypes.string,
     price: PropTypes.number,
     imageUrl: PropTypes.string,
