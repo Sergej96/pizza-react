@@ -1,10 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { setCategoryId } from '../../features/filter/filterSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../redux/store';
 
-const Categories = ({ id }) => {
-    const dispatch = useDispatch();
+type CategoriesProps = {
+    id: number;
+};
+
+const Categories: React.FC<CategoriesProps> = ({ id }) => {
+    const dispatch = useAppDispatch();
     const categories = [
         'Все',
         'Мясные',
@@ -13,7 +16,7 @@ const Categories = ({ id }) => {
         'Острые',
         'Закрытые',
     ];
-    const changeCategory = (index) => {
+    const changeCategory = (index: number) => {
         dispatch(setCategoryId(index));
     };
     return (
@@ -31,10 +34,6 @@ const Categories = ({ id }) => {
             </ul>
         </div>
     );
-};
-
-Categories.propTypes = {
-    id: PropTypes.number,
 };
 
 export default Categories;

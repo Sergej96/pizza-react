@@ -1,12 +1,29 @@
 import React from 'react';
 
-import propTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { changeCount, removeProduct } from '../../features/cart/cartSlice';
+import { useAppDispatch } from '../../redux/store';
 
-const CartItem = ({ id, title, imageUrl, size, type, price, count }) => {
-    const dispatch = useDispatch();
-    const onChangeCount = (newCount) => {
+type CartItemsProps = {
+    id: string;
+    title: string;
+    imageUrl: string;
+    size: number;
+    type: string;
+    price: number;
+    count: number;
+};
+
+const CartItem: React.FC<CartItemsProps> = ({
+    id,
+    title,
+    imageUrl,
+    size,
+    type,
+    price,
+    count,
+}) => {
+    const dispatch = useAppDispatch();
+    const onChangeCount = (newCount: number) => {
         dispatch(
             changeCount({
                 id,
@@ -108,16 +125,6 @@ const CartItem = ({ id, title, imageUrl, size, type, price, count }) => {
             </div>
         </div>
     );
-};
-
-CartItem.propTypes = {
-    id: propTypes.string,
-    title: propTypes.string,
-    imageUrl: propTypes.string,
-    size: propTypes.number,
-    type: propTypes.string,
-    price: propTypes.number,
-    count: propTypes.number,
 };
 
 export default CartItem;

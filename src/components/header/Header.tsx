@@ -3,11 +3,13 @@ import logoSite from '../../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
 import Search from '../categories/Search';
 import { useSelector } from 'react-redux';
+import { CartItem, selectCart } from '../../features/cart/cartSlice';
 
-const Header = () => {
-    const totalPrice = useSelector((state) => state.cart.totalPrice);
-    const totalCount = useSelector((state) =>
-        state.cart.products.reduce((count, item) => count + item.count, 0),
+const Header: React.FC = () => {
+    const { totalPrice, products } = useSelector(selectCart);
+    const totalCount = products.reduce(
+        (count: number, item: CartItem) => count + item.count,
+        0,
     );
     return (
         <div className="header">

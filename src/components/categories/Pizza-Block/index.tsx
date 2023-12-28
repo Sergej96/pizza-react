@@ -1,41 +1,63 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../../features/cart/cartSlice';
+import {
+    CartItem,
+    addProduct,
+    selectCartItemFind,
+} from '../../../features/cart/cartSlice';
+import { Link } from 'react-router-dom';
 
-const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
+type PizzaBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    sizes: number[];
+    types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+    id,
+    title,
+    price,
+    imageUrl,
+    sizes,
+    types,
+}) => {
     const typeNames = ['тонкое', 'традиционное'];
-    const [activeType, setActiveType] = useState(0);
-    const [activeSize, setActiveSize] = useState(0);
+    const [activeType, setActiveType] = useState<number>(0);
+    const [activeSize, setActiveSize] = useState<number>(0);
     const dispatch = useDispatch();
 
-    const cartItem = useSelector((store) =>
-        store.cart.products.find(
-            (item) =>
-                item.id === id &&
-                item.size === sizes[activeSize] &&
-                item.type === typeNames[activeType],
-        ),
+    const cartItem = useSelector(
+        selectCartItemFind(id, sizes[activeSize], typeNames[activeType]),
     );
     const addedCount = cartItem ? cartItem.count : 0;
 
     const onAddProduct = () => {
-        const obj = {
+        const newProduct: CartItem = {
             id,
             title,
             price,
             imageUrl,
             size: sizes[activeSize],
             type: typeNames[activeType],
+            count: 1,
         };
 
-        dispatch(addProduct(obj));
+        dispatch(addProduct(newProduct));
     };
 
     return (
         <div className="pizza-block">
-            <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-            <h4 className="pizza-block__title">{title}</h4>
+            <Link to={`pizzas/${id}`}>
+                <img
+                    className="pizza-block__image"
+                    src={imageUrl}
+                    alt="Pizza"
+                />
+                <h4 className="pizza-block__title">{title}</h4>
+            </Link>
             <div className="pizza-block__selector">
                 <ul>
                     {types.map((type, index) => (
@@ -88,15 +110,6 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
             </div>
         </div>
     );
-};
-
-PizzaBlock.propTypes = {
-    id: PropTypes.string,
-    title: PropTypes.string,
-    price: PropTypes.number,
-    imageUrl: PropTypes.string,
-    sizes: PropTypes.array,
-    types: PropTypes.array,
 };
 
 export default PizzaBlock;

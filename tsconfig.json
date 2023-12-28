@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "moduleResolution": "node",
+        "module": "esnext",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "lib": ["es6", "dom"],
+        "target": "ES5",
+        "jsx": "react-jsx"
+    },
+    "exclude": ["node_modules", "dist"],
+    "include": ["src", "src/@types"]
+}

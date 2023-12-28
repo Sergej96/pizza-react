@@ -1,28 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setSort } from '../../../features/filter/filterSlice';
+import {
+    selectStateFilter,
+    setSort,
+} from '../../../features/filter/filterSlice';
 
-export const sortList = [
+type SortItem = {
+    name: string;
+    type: string;
+};
+
+type PopupEvent = MouseEvent & { target: HTMLElement };
+
+export const sortList: SortItem[] = [
     { name: 'популярности', type: 'rating' },
     { name: 'цене', type: 'price' },
     { name: 'алфавиту', type: 'title' },
 ];
 
-const Sort = () => {
+const Sort: React.FC = () => {
     const dispatch = useDispatch();
-    const sort = useSelector((state) => state.filter.sort);
-    const sortRef = useRef();
+    const { sort } = useSelector(selectStateFilter);
+    const sortRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
 
-    const onSelectSort = (objSort) => {
+    const onSelectSort = (objSort: SortItem) => {
         dispatch(setSort(objSort));
         setIsOpen(false);
     };
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!sortRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            const _event = event as PopupEvent;
+            if (sortRef.current && !sortRef.current.contains(_event.target)) {
                 setIsOpen(false);
             }
         };
