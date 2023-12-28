@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { setCategoryId } from '../../features/filter/filterSlice';
 import { useAppDispatch } from '../../redux/store';
@@ -6,7 +7,7 @@ type CategoriesProps = {
     id: number;
 };
 
-const Categories: React.FC<CategoriesProps> = ({ id }) => {
+const Categories: React.FC<CategoriesProps> = React.memo(({ id }) => {
     const dispatch = useAppDispatch();
     const categories = [
         'Все',
@@ -34,6 +35,6 @@ const Categories: React.FC<CategoriesProps> = ({ id }) => {
             </ul>
         </div>
     );
-};
+});
 
 export default Categories;

@@ -1,14 +1,16 @@
+/* eslint-disable react/display-name */
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    selectStateFilter,
-    setSort,
-} from '../../../features/filter/filterSlice';
+import { useDispatch } from 'react-redux';
+import { Sort, setSort } from '../../../features/filter/filterSlice';
 
 type SortItem = {
     name: string;
     type: string;
+};
+
+type SortProps = {
+    sort: Sort;
 };
 
 type PopupEvent = MouseEvent & { target: HTMLElement };
@@ -19,9 +21,8 @@ export const sortList: SortItem[] = [
     { name: 'алфавиту', type: 'title' },
 ];
 
-const Sort: React.FC = () => {
+const SortPopup: React.FC<SortProps> = React.memo(({ sort }) => {
     const dispatch = useDispatch();
-    const { sort } = useSelector(selectStateFilter);
     const sortRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -98,6 +99,6 @@ const Sort: React.FC = () => {
             )}
         </div>
     );
-};
+});
 
-export default Sort;
+export default SortPopup;

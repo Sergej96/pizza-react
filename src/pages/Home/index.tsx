@@ -4,7 +4,7 @@ import qs from 'qs';
 import Skeleton from '../../components/categories/Pizza-Block/skeleton';
 import PizzaBlock from '../../components/categories/Pizza-Block';
 import Categories from '../../components/categories';
-import Sort, { sortList } from '../../components/categories/Sort';
+import { sortList } from '../../components/categories/SortPopup';
 import Pagination from '../../components/categories/Pagination';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -19,6 +19,7 @@ import {
     setCurrentPage,
 } from '../../features/pizza/pizzaSlice';
 import { useAppDispatch } from '../../redux/store';
+import SortPopup from '../../components/categories/SortPopup';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -85,7 +86,7 @@ const Home: React.FC = () => {
         <>
             <div className="content__top">
                 <Categories id={categoryId} />
-                <Sort />
+                <SortPopup sort={sort} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === 'error' ? (
