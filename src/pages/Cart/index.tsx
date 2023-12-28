@@ -5,13 +5,11 @@ import CartEmpty from '../../components/cartEmpty';
 import CartItem from '../../components/cartItem';
 import { clearCart, selectCart } from '../../features/cart/cartSlice';
 import { useAppDispatch } from '../../redux/store';
+import { calcTotalCount } from '../../utils/cartUtil';
 
 const Cart: React.FC = () => {
     const { products, totalPrice } = useSelector(selectCart);
-    const totalCount = products.reduce(
-        (count: number, item) => count + item.count,
-        0,
-    );
+    const totalCount = calcTotalCount(products);
     const dispatch = useAppDispatch();
 
     const onClearCart = () => {
