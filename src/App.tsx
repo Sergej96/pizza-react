@@ -1,27 +1,37 @@
-import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import {
+    Route,
+    RouterProvider,
+    createBrowserRouter,
+    createRoutesFromElements,
+} from 'react-router-dom';
 
 import './scss/app.scss';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import MainLayout from './layouts/MainLayout';
+import { pizzaDetailLoader } from './pages/PizzaDetail';
 
 const Cart = React.lazy(() => import('./pages/Cart'));
 const PizzaDetail = React.lazy(() => import('./pages/PizzaDetail'));
 
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path="/" element={<MainLayout />}>
+            <Route path="" element={<Home />} />
+            <Route path="cart" element={<Cart />} />
+            <Route
+                path="pizzas/:id"
+                element={<PizzaDetail />}
+                loader={pizzaDetailLoader}
+            />
+            <Route path="*" element={<NotFound />} />
+        </Route>,
+    ),
+);
+
 function App() {
-    return (
-        <Suspense fallback={<div>Загрузка страницы</div>}>
-            <Routes>
-                <Route path="/" element={<MainLayout />}>
-                    <Route path="" element={<Home />} />
-                    <Route path="cart" element={<Cart />} />
-                    <Route path="pizzas/:id" element={<PizzaDetail />} />
-                    <Route path="*" element={<NotFound />} />
-                </Route>
-            </Routes>
-        </Suspense>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;

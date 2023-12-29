@@ -2,9 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../redux/store';
 import { Sort } from '../filter/filterSlice';
-import { log } from 'console';
 
-type Pizza = {
+export type Pizza = {
     id: string;
     title: string;
     price: number;

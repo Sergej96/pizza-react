@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Header from '../components/header/Header';
 import { Outlet } from 'react-router';
 
@@ -8,7 +8,9 @@ const MainLayout: React.FC = () => {
             <Header />
             <div className="content">
                 <div className="container">
-                    <Outlet />
+                    <Suspense fallback={<div>Загрузка страницы</div>}>
+                        <Outlet />
+                    </Suspense>
                 </div>
             </div>
         </div>
