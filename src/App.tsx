@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import MainLayout from './layouts/MainLayout';
 import { pizzaDetailLoader } from './pages/PizzaDetail';
+import PageError from './pages/PageError';
 
 const Cart = React.lazy(() => import('./pages/Cart'));
 const PizzaDetail = React.lazy(() => import('./pages/PizzaDetail'));
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
                 path="pizzas/:id"
                 element={<PizzaDetail />}
                 loader={pizzaDetailLoader}
+                errorElement={<PageError />}
             />
             <Route path="*" element={<NotFound />} />
         </Route>,

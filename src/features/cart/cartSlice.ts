@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
 import { calcTotalPrice, getCartFromLS } from '../../utils/cartUtil';
 
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
                 state.products.push({ ...action.payload });
             }
 
-            calcTotalPrice(state.products);
+            state.totalPrice = calcTotalPrice(state.products);
         },
         changeCount(
             state,
@@ -60,7 +60,7 @@ const cartSlice = createSlice({
             if (findProduct) {
                 findProduct.count = action.payload.count;
             }
-            calcTotalPrice(state.products);
+            state.totalPrice = calcTotalPrice(state.products);
         },
         removeProduct(
             state,
@@ -77,7 +77,7 @@ const cartSlice = createSlice({
                         item.type !== action.payload.type
                     );
                 });
-                calcTotalPrice(state.products);
+                state.totalPrice = calcTotalPrice(state.products);
             }
         },
         clearCart(state) {
@@ -87,13 +87,18 @@ const cartSlice = createSlice({
     },
 });
 
-export const selectCart = (state: RootState) => state.cart;
-export const selectCartItemFind =
+export const selectCart = createSelector(
+    (state: RootState) => state.cart,
+    (state) => state,
+);
+export const selectCartItemFind = createSelector(
     (id: string, size: number, type: string) => (state: RootState) =>
         state.cart.products.find(
             (item) =>
                 item.id === id && item.size === size && item.type === type,
-        );
+        ),
+    (product) => product,
+);
 
 export const { addProduct, changeCount, removeProduct, clearCart } =
     cartSlice.actions;
