@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './Pagination.module.scss';
 import { useSelector } from 'react-redux';
-import { setCurrentPage } from '../../../features/pizza/slice';
-import { useAppDispatch } from '../../../redux/store';
-import { selectStatePizza } from '../../../features/pizza/selectors';
+import { setCurrentPage } from '../../features/pizza/slice';
+import { useAppDispatch } from '../../redux/store';
+import { selectStatePizza } from '../../features/pizza/selectors';
 
 const Pagination: React.FC = () => {
     const { page, totalCount, limitShow } = useSelector(selectStatePizza);

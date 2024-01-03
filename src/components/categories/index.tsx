@@ -7,16 +7,16 @@ type CategoriesProps = {
     id: number;
 };
 
+export const categories = [
+    'Все',
+    'Мясные',
+    'Вегетарианские',
+    'Гриль',
+    'Острые',
+    'Закрытые',
+];
 const Categories: React.FC<CategoriesProps> = React.memo(({ id }) => {
     const dispatch = useAppDispatch();
-    const categories = [
-        'Все',
-        'Мясные',
-        'Вегетарианская',
-        'Гриль',
-        'Острые',
-        'Закрытые',
-    ];
     const changeCategory = (index: number) => {
         dispatch(setCategoryId(index));
     };

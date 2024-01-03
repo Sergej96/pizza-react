@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CartEmpty from '../../components/cartEmpty';
-import CartItem from '../../components/cartItem';
+import CartEmpty from '../../components/CartEmpty';
+import CartItem from '../../components/CartItem';
 import { useAppDispatch } from '../../redux/store';
 import { calcTotalCount } from '../../utils/cartUtil';
 import { selectCart } from '../../features/cart/selectors';

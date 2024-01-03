@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 
-import Skeleton from '../../components/categories/Pizza-Block/skeleton';
-import PizzaBlock from '../../components/categories/Pizza-Block';
-import Categories from '../../components/categories';
-import { sortList } from '../../components/categories/SortPopup';
-import Pagination from '../../components/categories/Pagination';
+import Skeleton from '../../components/PizzaBlock/skeleton';
+import PizzaBlock from '../../components/PizzaBlock';
+import Categories, { categories } from '../../components/Categories';
+import { sortList } from '../../components/SortPopup';
+import Pagination from '../../components/Pagination';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { useAppDispatch } from '../../redux/store';
-import SortPopup from '../../components/categories/SortPopup';
+import SortPopup from '../../components/SortPopup';
 import { selectStateFilter } from '../../features/filter/selectors';
 import { selectStatePizza } from '../../features/pizza/selectors';
 import { fetchPizzas, setCurrentPage } from '../../features/pizza/slice';
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
                 <Categories id={categoryId} />
                 <SortPopup sort={sort} />
             </div>
-            <h2 className="content__title">Все пиццы</h2>
+            <h2 className="content__title">{categories[categoryId]} пиццы</h2>
             {status === 'error' ? (
                 <div className="content__empty">
                     <h2>Произошла ошибка 😕</h2>

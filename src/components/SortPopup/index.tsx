@@ -2,8 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Sort } from '../../../features/filter/types';
-import { setSort } from '../../../features/filter/slice';
+import { Sort } from '../../features/filter/types';
+import { setSort } from '../../features/filter/slice';
 
 type SortItem = {
     name: string;
