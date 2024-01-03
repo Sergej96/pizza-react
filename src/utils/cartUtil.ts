@@ -1,4 +1,4 @@
-import { CartItem } from '../features/cart/cartSlice';
+import { CartItem } from '../features/cart/types';
 
 export const getCartFromLS = () => {
     const cartStr = localStorage.getItem('cart');

@@ -3,7 +3,7 @@ import logoSite from '../../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
 import Search from '../categories/Search';
 import { useSelector } from 'react-redux';
-import { selectCart } from '../../features/cart/cartSlice';
+import { selectCart } from '../../features/cart/selectors';
 import { calcTotalCount } from '../../utils/cartUtil';
 
 const Header: React.FC = () => {

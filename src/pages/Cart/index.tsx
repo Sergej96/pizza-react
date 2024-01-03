@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartEmpty from '../../components/cartEmpty';
 import CartItem from '../../components/cartItem';
-import { clearCart, selectCart } from '../../features/cart/cartSlice';
 import { useAppDispatch } from '../../redux/store';
 import { calcTotalCount } from '../../utils/cartUtil';
+import { selectCart } from '../../features/cart/selectors';
+import { clearCart } from '../../features/cart/slice';
 
 const Cart: React.FC = () => {
     const { products, totalPrice } = useSelector(selectCart);

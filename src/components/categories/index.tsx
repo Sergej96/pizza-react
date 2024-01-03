@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { setCategoryId } from '../../features/filter/filterSlice';
+import { setCategoryId } from '../../features/filter/slice';
 import { useAppDispatch } from '../../redux/store';
 
 type CategoriesProps = {

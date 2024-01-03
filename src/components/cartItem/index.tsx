@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 
-import { changeCount, removeProduct } from '../../features/cart/cartSlice';
 import { useAppDispatch } from '../../redux/store';
+import { changeCount, removeProduct } from '../../features/cart/slice';
 
 type CartItemsProps = {
     id: string;

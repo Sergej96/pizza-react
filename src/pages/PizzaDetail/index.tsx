@@ -7,8 +7,8 @@ import {
     useAsyncValue,
     useLoaderData,
 } from 'react-router';
-import { Pizza } from '../../features/pizza/pizzaSlice';
 import { Link } from 'react-router-dom';
+import { Pizza } from '../../features/pizza/types';
 
 const PizzaContent = () => {
     const pizza = useAsyncValue() as Pizza;
