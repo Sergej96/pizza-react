@@ -2,6 +2,7 @@
     "name": "pizza-v2",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://sergej96.github.io/pizza-react",
     "dependencies": {
         "@reduxjs/toolkit": "^2.0.1",
         "@testing-library/jest-dom": "^6.1.6",
@@ -29,7 +30,8 @@
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
-        "sass": "^1.69.6"
+        "sass": "^1.69.6",
+        "gh-pages": "^6.1.1"
     },
     "parserOptions": {
         "requireConfigFile": "false"
@@ -41,7 +43,9 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "browserslist": {
         "production": [
