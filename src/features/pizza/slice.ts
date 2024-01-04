@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { FetchPizzasArgs, Pizza, PizzaSliceState, Status } from './types';
 import axios from 'axios';
 
-const initialState: PizzaSliceState = {
+export const initialState: PizzaSliceState = {
     page: 1,
     totalCount: 10,
     limitShow: 4,
